@@ -2,17 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("@hapi/joi");
 const Usuario = require("../models/usuario_model");
-
-const userSchema = Joi.object({
-  name: Joi.string().min(3).max(30).required(),
-  password: Joi.string().pattern(/^[a-zA-Z0-9]{3.30}$/),
-  email: Joi.string().email({
-    minDomainSegments: 2,
-    tlds: {
-      allow: ["com", "net"],
-    },
-  }),
-});
+const Validation = require("../services/validateServices");
 
 router.get("/", (req, res) => {
   let resultado = listUsers();
@@ -25,14 +15,11 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   let body = req.body;
-  const { error, value } = userSchema.validate({
-    name: body.name,
-    email: body.email,
-  });
-
-  let resultado = addUser(body);
+  let validation = new Validation();
+  const error = validation.validateUser(body);
 
   if (!error) {
+    let resultado = addUser(body);
     resultado
       .then((user) => {
         res.json(user);
@@ -41,18 +28,14 @@ router.post("/", (req, res) => {
         res.status(400).json(err);
       });
   } else {
-    res.status(400).json({
-      error: error,
-    });
+    res.status(400).json(error);
   }
 });
 
 router.put("/:id", (req, res) => {
   let body = req.body;
-  const { error, value } = userSchema.validate({
-    name: body.name,
-    email: body.email,
-  });
+  let validation = new Validation();
+  const error = validation.validateUser(body);
   if (!error) {
     let resultado = updateUser(req.params.id, body);
     resultado
@@ -63,9 +46,7 @@ router.put("/:id", (req, res) => {
         res.status(400).json(err);
       });
   } else {
-    res.status(400).json({
-      error: error,
-    });
+    res.status(400).json(error);
   }
 });
 

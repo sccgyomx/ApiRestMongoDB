@@ -22,6 +22,5 @@ mongoose
   .catch((err) => console.log(err));
 
 app.listen(port, (res) => {
-  console.log(res);
   console.log(`El server se esta ejecutando en http://localhost:${port}`);
 });
