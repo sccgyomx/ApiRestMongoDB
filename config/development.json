@@ -1,0 +1,10 @@
+{
+  "name": "Api Rest MongoDB",
+  "configDB": {
+    "host": "mongodb://localhost:27017/curso_mongo"
+  },
+  "configToken": {
+    "seed": "token",
+    "expiration": "1h"
+  }
+}

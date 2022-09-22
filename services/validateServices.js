@@ -28,12 +28,12 @@ module.exports = class Validation {
       : (this.errors.password =
           "Contiene al menos 8 caracteres y un máximo de 20 caracteres.\nContiene al menos un dígito.\nContiene al menos un alfabeto en mayúsculas.\nContiene al menos un alfabeto en minúscula.\nContiene al menos un carácter especial que incluye ! @ # $% & *() - + = ^ .\nNo contiene ningún espacio en blanco.");
 
-    return Object.keys(this.errors).length > 0 ? this.errors : undefined;
+    return Object.keys(this.errors).length > 0 ? this.errors : {};
   }
 
   validateCourse(course) {
     course.title === undefined
-      ? (this.errors.title = "Eltitulo es requerido")
+      ? (this.errors.title = "El titulo es requerido")
       : course.title.length < 3
       ? (this.errors.title = "El titulo debe ser mayor a 3")
       : course.title.length > 50
@@ -49,6 +49,6 @@ module.exports = class Validation {
           "La la descripcion debe ser mayor a 10 caracteres")
       : undefined;
 
-    return Object.keys(this.errors).length > 0 ? this.errors : undefined;
+    return Object.keys(this.errors).length > 0 ? this.errors : {};
   }
 };

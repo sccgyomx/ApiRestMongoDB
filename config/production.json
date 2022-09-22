@@ -1,0 +1,8 @@
+{
+  "name": "Api Rest MongoDB",
+  "configDB": {},
+  "configToken": {
+    "seed": "token",
+    "expiration": "1h"
+  }
+}
